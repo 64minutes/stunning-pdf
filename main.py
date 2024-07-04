@@ -34,6 +34,7 @@ def main():
     #Iterating over dict object of address book of person: links
     for person, links in pages.items():
         #path pointing to person's own directory
+        print(f"Looping over {person}")
         person_path = os.path.join(PARENT_DIR, person)
         #creating paths to official links & unofficial links in person's own directory
         official_links_dir = os.path.join(person_path, "Official Links")
@@ -64,7 +65,6 @@ def create_links_pages():
     """Creates a dict object relating a person with their primary/secondary/tetiary sources"""
     with open('data.csv', 'r') as file:
         df = pd.read_csv(file)
-
         #Extract columns
         official_links = df['Official Websites']
         unofficial_links = df['Unofficial Websites']
@@ -89,8 +89,8 @@ def create_links_pages():
 
         #Create dictionary of name (key) and their assiociated links (value)
         df['Links'] = consolidated_links
+        df = df.dropna(subset=['Full Name', 'Official Websites', 'Unofficial Websites'])
         links_pages = df.set_index('Full Name').to_dict()['Links']
-        print(links_pages)
         return links_pages
 
 
