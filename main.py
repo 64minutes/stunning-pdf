@@ -38,14 +38,26 @@ def main():
         #creating paths to official links & unofficial links in person's own directory
         official_links_dir = os.path.join(person_path, "Official Links")
         unofficial_links_dir = os.path.join(person_path, "Unofficial Links")
-        os.mkdir(official_links_dir)
-        os.mkdir(unofficial_links_dir)
+        try:
+            os.mkdir(official_links_dir)
+            os.mkdir(unofficial_links_dir)
+        except FileExistsError:
+            pass
         #Iterating over person's official links aka primary sources
         official_links = links['Official Links']
+        print(official_links)
         for link in official_links:
-            take_screenshot(link=link, output_dir=official_links_dir)
+            try:
+                take_screenshot(link=link, output_dir=official_links_dir, driver=driver)
+            except:
+                print(f"{link} did not print for {person}")
+        unofficial_links = links['Unofficial Links']
+        print(unofficial_links)
         for link in unofficial_links:
-            take_screenshot(link=link, output_dir=unofficial_links_dir)
+            try:
+                take_screenshot(link=link, output_dir=unofficial_links_dir, driver=driver)
+            except:
+                print(f"{link} did not print for {person}")
 
 
 def create_links_pages():
@@ -78,6 +90,7 @@ def create_links_pages():
         #Create dictionary of name (key) and their assiociated links (value)
         df['Links'] = consolidated_links
         links_pages = df.set_index('Full Name').to_dict()['Links']
+        print(links_pages)
         return links_pages
 
 
@@ -94,10 +107,11 @@ def create_dir(links_pages):
             pass
 
 
-def take_screenshot(link=link, output_dir=output_dir):
+def take_screenshot(link, output_dir, driver):
+    time.sleep(3)
     download_path = r'C:\Users\User\Downloads'
     driver.get(link)
-    time.sleep(3)
+    time.sleep(5)
     driver.execute_script('window.print();')
     timestamp_now = time.time() # time now
 
@@ -112,7 +126,7 @@ def take_screenshot(link=link, output_dir=output_dir):
                     pass
                 # if time delta is less than 15 seconds move this file
                 else:
-                    if (timestamp_now - timestamp_file) < 15: 
+                    if (timestamp_now - timestamp_file) < 10: 
                         full_new_path = os.path.join(output_dir, filename)
                         os.rename(full_path, full_new_path)
                         print(full_path+' is moved to '+full_new_path)
