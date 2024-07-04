@@ -6,18 +6,8 @@ import csv
 import pandas as pd
 
 
-def read_csv():
-    with open('data.csv', 'r') as file:
-        df = pd.read_csv(file)
-        links = df['Official Websites'].dropna()
-        sources = []
-        for link in links:
-            sources.append(link)
-        print(sources)
-        return sources
-
-
-def create_data():
+def create_links_pages():
+    """Creates a dict object relating a person with their primary/secondary/tetiary sources"""
     with open('data.csv', 'r') as file:
         df = pd.read_csv(file)
 
@@ -45,8 +35,21 @@ def create_data():
 
         #Create dictionary of name (key) and their assiociated links (value)
         df['Links'] = consolidated_links
-        my_dict = df.set_index('Full Name').to_dict()['Links']
-        return my_dict
+        links_pages = df.set_index('Full Name').to_dict()['Links']
+        return links_pages
+
+
+def create_dir(links_pages):
+    """Takes in the dict object of person:sources and makes folders of all people in the dict on local disk drive"""
+    people = links_pages.keys()
+    parent_dir = r'C:\Users\User\Documents\Lyodssoft Work\save_pdf\output'
+    for person in people:
+        directory = person
+        path = os.path.join(parent_dir, directory)
+        try:        
+            os.mkdir(path)
+        except FileExistsError:
+            pass
 
 
 def main():
@@ -97,4 +100,4 @@ def main():
 
 
 if __name__ == "__main__":
-    create_data()
+    create_dir(create_links_pages())
