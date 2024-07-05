@@ -9,8 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 PARENT_DIR = os.environ.get("PARENT_DIR")
 DOWNLOAD_PATH = os.environ.get("DOWNLOAD_PATH")
-print(PARENT_DIR)
-print(DOWNLOAD_PATH)
+
 
 def main():
     global PARENT_DIR
