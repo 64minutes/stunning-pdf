@@ -4,8 +4,14 @@ import json
 from selenium import webdriver
 import csv
 import pandas as pd
-PARENT_DIR = "insert parent dir"
-DOWNLOAD_PATH = "insert download path"
+from dotenv import load_dotenv, dotenv_values
+
+#load variables from .env
+load_dotenv()
+PARENT_DIR = os.environ.get("PARENT_DIR")
+DOWNLOAD_PATH = os.environ.get("DOWNLOAD_PATH")
+print(PARENT_DIR)
+print(DOWNLOAD_PATH)
 
 def main():
     global PARENT_DIR
