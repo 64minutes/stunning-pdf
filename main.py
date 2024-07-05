@@ -4,8 +4,12 @@ import json
 from selenium import webdriver
 import csv
 import pandas as pd
+PARENT_DIR = 'insert parent dir"
+DOWNLOAD_PATH = "insert download path"
 
 def main():
+    global PARENT_DIR
+    global DOWNLOAD_PATH
     #Setting up automated Chrome to save pdf
     appState = {
         "recentDestinations": [
@@ -23,8 +27,6 @@ def main():
     chrome_options.add_experimental_option('prefs', profile)
     chrome_options.add_argument('--kiosk-printing')
     driver = webdriver.Chrome(options=chrome_options)
-
-    PARENT_DIR = r'C:\Users\User\Documents\Lyodssoft Work\save_pdf\output' # Path to main output folder
 
     #Creating address book of person: links
     pages = create_links_pages()
@@ -62,7 +64,7 @@ def main():
 
 
 def create_links_pages():
-    """Creates a dict object relating a person with their primary/secondary/tetiary sources"""
+    """Opens a file named "data.csv", creates a dict object relating a person with their primary/secondary/tetiary sources"""
     with open('data.csv', 'r') as file:
         df = pd.read_csv(file)
         #Extract columns
@@ -97,7 +99,7 @@ def create_links_pages():
 def create_dir(links_pages):
     """Takes in the dict object of person:sources and makes folders of all people in the dict on local disk drive"""
     people = links_pages.keys()
-    PARENT_DIR = r'C:\Users\User\Documents\Lyodssoft Work\save_pdf\output'
+    global PARENT_DIR
     for person in people:
         directory = person
         path = os.path.join(PARENT_DIR, directory)
@@ -109,7 +111,8 @@ def create_dir(links_pages):
 
 def take_screenshot(link, output_dir, driver):
     time.sleep(3)
-    download_path = r'C:\Users\User\Downloads'
+    global DOWNLOAD_PATH
+    download_path = DOWNLOAD_PATH
     driver.get(link)
     time.sleep(5)
     driver.execute_script('window.print();')
