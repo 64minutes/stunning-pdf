@@ -2,9 +2,8 @@ import os
 import time
 import json
 from selenium import webdriver
-import csv
 import pandas as pd
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 
 #load variables from .env
 load_dotenv()
