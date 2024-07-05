@@ -6,7 +6,7 @@ Extracts website links from an external spreadsheet, creates directories for eac
 <p>
   <ul>
     <h2>Future Implementations</h2>
-    <li>Environment variables to read path directories</li>
+    <s><li>Environment variables to read path directories</s> (Completed on 5 Jul 2024)</li>
     <li>Use logging instead of printing to console for alerts when unable to access website / print PDF</li>
   </ul>
 </p>
