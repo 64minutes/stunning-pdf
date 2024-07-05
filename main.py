@@ -4,12 +4,11 @@ import json
 from selenium import webdriver
 import csv
 import pandas as pd
-PARENT_DIR = 'insert parent dir"
+PARENT_DIR = "insert parent dir"
 DOWNLOAD_PATH = "insert download path"
 
 def main():
     global PARENT_DIR
-    global DOWNLOAD_PATH
     #Setting up automated Chrome to save pdf
     appState = {
         "recentDestinations": [
